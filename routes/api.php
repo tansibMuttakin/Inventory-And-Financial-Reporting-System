@@ -1,15 +1,20 @@
 <?php
 
-use App\Http\Controllers\FinancialReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\JournalController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\FinancialReportController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductsController::class, 'index']);
