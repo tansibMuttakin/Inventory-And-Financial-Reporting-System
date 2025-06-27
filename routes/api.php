@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\SaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\JournalController;
+use App\Http\Controllers\ProductsController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -23,4 +24,9 @@ Route::prefix('sales')->group(function () {
     Route::get('/{sale}', [SaleController::class, 'show']);
     Route::put('/{sale}', [SaleController::class, 'update']);
     Route::delete('/{sale}', [SaleController::class, 'destroy']);
+});
+
+Route::prefix('journals')->group(function () {
+    Route::get('/', [JournalController::class, 'index']);
+    Route::get('/summary', [JournalController::class, 'summary']);
 });

@@ -6,6 +6,7 @@ use App\Models\Sale;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreSaleRequest;
+use SaleService;
 
 class SaleController extends Controller
 {
@@ -46,6 +47,9 @@ class SaleController extends Controller
                 'paid_amount' => $validated['paid_amount'],
                 'due_amount' => $due,
             ]);
+
+            // Create journal entries for sale
+            SaleService::createJournalOnSale($sale->id, $subTotal, $vat, $validated, $due);
 
             // Reduce product stock
             $product->decrement('current_stock', $validated['quantity']);
