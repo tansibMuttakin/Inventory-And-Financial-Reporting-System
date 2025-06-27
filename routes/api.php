@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FinancialReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaleController;
@@ -30,3 +31,5 @@ Route::prefix('journals')->group(function () {
     Route::get('/', [JournalController::class, 'index']);
     Route::get('/summary', [JournalController::class, 'summary']);
 });
+
+Route::get('/financial-report', [FinancialReportController::class, 'index']);
