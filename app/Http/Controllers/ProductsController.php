@@ -17,41 +17,54 @@ class ProductsController extends Controller
     // Create a new product
     public function store(StoreProductRequest $request)
     {
-        $validated = $request->validated();
-        $validated['current_stock'] = $validated['opening_stock'];
+        try {
+            $validated = $request->validated();
+            $validated['current_stock'] = $validated['opening_stock'];
 
-        $product = Product::create($validated);
+            $product = Product::create($validated);
 
-        return response()->json($product, 201);
+            return response()->json($product, 201);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+
     }
 
     // Show a single product
-    public function show($id)
+    public function show(Product $product)
     {
-        $product = Product::findOrFail($id);
         return response()->json($product);
     }
 
     // Update a product
-    public function update(StoreProductRequest $request, $id)
+    public function update(StoreProductRequest $request, Product $product)
     {
-        $product = Product::findOrFail($id);
         $validated = $request->validated();
+        try {
+            // Only update current_stock if opening_stock changes
+            if ($validated['opening_stock'] != $product->opening_stock) {
+                $validated['current_stock'] = $validated['opening_stock'];
+            }
 
-        // Only update current_stock if opening_stock changes
-        if ($validated['opening_stock'] != $product->opening_stock) {
-            $validated['current_stock'] = $validated['opening_stock'];
+            $product->update($validated);
+
+            return response()->json($product);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
         }
 
-        $product->update($validated);
 
-        return response()->json($product);
     }
 
     // Delete a product
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        Product::findOrFail($id)->delete();
-        return response()->json(['message' => 'Product deleted']);
+        try {
+            $product->delete();
+            return response()->json(['message' => 'Product deleted']);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+
     }
 }

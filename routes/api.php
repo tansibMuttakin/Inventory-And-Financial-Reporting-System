@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,7 +12,15 @@ Route::get('/user', function (Request $request) {
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductsController::class, 'index']);
     Route::post('/', [ProductsController::class, 'store']);
-    Route::get('{id}', [ProductsController::class, 'show']);
-    Route::put('{id}', [ProductsController::class, 'update']);
-    Route::delete('{id}', [ProductsController::class, 'destroy']);
+    Route::get('/{product}', [ProductsController::class, 'show']);
+    Route::put('/{product}', [ProductsController::class, 'update']);
+    Route::delete('/{product}', [ProductsController::class, 'destroy']);
+});
+
+Route::prefix('sales')->group(function () {
+    Route::get('/', [SaleController::class, 'index']);
+    Route::post('/', [SaleController::class, 'store']);
+    Route::get('/{sale}', [SaleController::class, 'show']);
+    Route::put('/{sale}', [SaleController::class, 'update']);
+    Route::delete('/{sale}', [SaleController::class, 'destroy']);
 });
