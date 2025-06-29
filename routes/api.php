@@ -24,7 +24,7 @@ Route::prefix('products')->middleware('auth:sanctum')->group(function () {
     Route::delete('/{product}', [ProductsController::class, 'destroy']);
 });
 
-Route::prefix('sales')->group(function () {
+Route::prefix('sales')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [SaleController::class, 'index']);
     Route::post('/', [SaleController::class, 'store']);
     Route::get('/{sale}', [SaleController::class, 'show']);
@@ -32,7 +32,7 @@ Route::prefix('sales')->group(function () {
     Route::delete('/{sale}', [SaleController::class, 'destroy']);
 });
 
-Route::prefix('journals')->group(function () {
+Route::prefix('journals')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [JournalController::class, 'index']);
     Route::get('/summary', [JournalController::class, 'summary']);
 });

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Services\SaleService;
 use App\Http\Requests\StoreSaleRequest;
-use SaleService;
 
 class SaleController extends Controller
 {
@@ -32,7 +32,7 @@ class SaleController extends Controller
         try {
             $unitPrice = $product->sell_price;
             $subTotal = ($unitPrice * $validated['quantity']) - ($validated['discount'] ?? 0);
-            $vat = $subTotal * 0.05; // VAT: 5% (on sale amount after discount)
+            $vat = $subTotal * ($validated['vat'] / 100);
 
 
             $total = $subTotal + $vat;
@@ -42,7 +42,8 @@ class SaleController extends Controller
                 'product_id' => $product->id,
                 'quantity' => $validated['quantity'],
                 'discount' => $validated['discount'] ?? 0,
-                'vat' => $vat,
+                'vat' => $validated['vat'] ?? 0,
+                'vat_amount' => $vat,
                 'total' => $total,
                 'paid_amount' => $validated['paid_amount'],
                 'due_amount' => $due,

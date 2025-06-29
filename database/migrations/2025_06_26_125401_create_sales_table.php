@@ -15,9 +15,10 @@ return new class extends Migration {
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->integer('quantity');
             $table->decimal('discount', 10, 2)->default(0);
-            $table->decimal('vat', 10, 2)->default(0);
+            $table->integer('vat')->default(0);
             $table->decimal('total', 10, 2);
             $table->decimal('paid_amount', 10, 2);
+            $table->decimal('vat_amount', 10, 2);
             $table->decimal('due_amount', 10, 2);
             $table->timestamps();
         });

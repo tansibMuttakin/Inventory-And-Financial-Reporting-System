@@ -12,6 +12,7 @@ class Sale extends Model
         'discount',
         'vat',
         'total',
+        'vat_amount',
         'paid_amount',
         'due_amount'
     ];

@@ -1,4 +1,5 @@
 <?php
+namespace App\Services;
 
 use App\Models\Sale;
 use App\Models\Journal;
