@@ -50,7 +50,7 @@ class SaleController extends Controller
             ]);
 
             // Create journal entries for sale
-            SaleService::createJournalOnSale($sale->id, $subTotal, $vat, $validated, $due);
+            SaleService::createJournalOnSale($sale->id, ($unitPrice * $validated['quantity']), $vat, $validated, $due);
 
             // Reduce product stock
             $product->decrement('current_stock', $validated['quantity']);
