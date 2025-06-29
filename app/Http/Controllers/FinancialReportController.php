@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FinancialReportController extends Controller
@@ -10,8 +11,8 @@ class FinancialReportController extends Controller
     public function index(Request $request)
     {
         try {
-            $from = $request->input('from');
-            $to = $request->input('to');
+            $from = Carbon::parse($request->input('from'))->startOfDay();
+            $to = Carbon::parse($request->input('to'))->endOfDay();
 
             $salesQuery = Sale::with('product');
 
