@@ -8,6 +8,12 @@ use App\Http\Controllers\JournalController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\FinancialReportController;
 
+// health-check route
+Route::get('/ping', function () {
+    return response()->json(['message' => 'pong']);
+});
+
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
