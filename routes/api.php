@@ -37,4 +37,4 @@ Route::prefix('journals')->middleware('auth:sanctum')->group(function () {
     Route::get('/summary', [JournalController::class, 'summary']);
 });
 
-Route::get('/financial-report', [FinancialReportController::class, 'index']);
+Route::get('/financial-report', [FinancialReportController::class, 'index'])->middleware('auth:sanctum');
